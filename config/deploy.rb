@@ -5,8 +5,8 @@ lock '3.1.0'
 # Setup Git
 ############################################
 
-set :application, "APPLICATION NAME HERE"
-set :repository, "git@github.com:Mixd/GITHUB-REPO-HERE.git"
+set :application, "wp-deploy"
+set :repository, "git@github.com:Mixd/wp-deploy.git"
 set :scm, :git
 set :deploy_via, :remote_cache
 set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules", "capfile", "config/"]
@@ -16,7 +16,9 @@ set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules", "capfile",
 ############################################
 
 set :use_sudo, false
-ssh_options[:forward_agent] = true
+set :ssh_options, {
+  forward_agent: true
+}
 
 ############################################
 # Default tasks
