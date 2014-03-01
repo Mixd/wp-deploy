@@ -15,8 +15,7 @@ set :ssh_options, {
 ############################################
 # Setup Git
 ############################################
-
+set :git_strategy, SubmoduleStrategy
 set :application, "wp-deploy"
 set :repo_url, "git@github.com:Mixd/wp-deploy.git"
 set :scm, :git
-set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules", "capfile", "config/"]
