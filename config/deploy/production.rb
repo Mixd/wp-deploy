@@ -2,10 +2,10 @@
 # Setup Server
 ############################################
 
-set :user, "SSHUSER"
-set :host, "XXX.XXX.X.X"
-server "#{host}", :app
-set :deploy_to, "/var/www/EXAMPLE.COM/httpdocs"
+set :stage, :production
+
+server "XXX.XXX.XX.XXX", user: "SSHUSER", roles: %w{web app db}
+set :deploy_to, "/deploy/to/path"
 
 ############################################
 # Setup Git
