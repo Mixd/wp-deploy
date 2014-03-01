@@ -4,9 +4,6 @@ require 'capistrano/setup'
 # Includes default deployment tasks
 require 'capistrano/deploy'
 
-# Includes bundler specific tasks
-require 'capistrano/bundler'
-
 # Includes YAML
 require 'yaml'
 

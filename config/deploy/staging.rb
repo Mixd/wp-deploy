@@ -1,11 +1,14 @@
 ############################################
 # Setup Server
 ############################################
-role :web, %w{mixdsftpuser@mixd-server-master-002.mixd.co.uk}
-set :deploy_to, "/var/www/aaronthomas.co.uk/httpdocs/cap"
+
+set :stage, :staging
+
+server "XXX.XXX.XX.XXX", user: "SSHUSER", roles: %w{web app db}
+set :deploy_to, "/deploy/to/path"
 
 ############################################
 # Setup Git
 ############################################
 
-set :branch, "master"
+set :branch, "development"
