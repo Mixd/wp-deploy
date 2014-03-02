@@ -29,6 +29,6 @@ module SubmoduleStrategy
     git :checkout, '-B', release_branch, 
       fetch(:remote_branch, "origin/#{fetch(:branch)}")
     git :submodule, :update, '--init'
-    context.execute "rsync -ar --exclude=.git\* #{repo_path}/ #{release_path}"
+    context.execute "rsync -ar --filter=':- .capignore' --exclude=.git\* #{repo_path}/ #{release_path}"
   end
 end
