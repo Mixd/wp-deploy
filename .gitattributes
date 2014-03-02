@@ -1,5 +1,5 @@
-lib export-ignore
-config export-ignore
+/lib export-ignore
+/config export-ignore
 Capfile export-ignore
 Gemfile export-ignore
 .gitattributes export-ignore
