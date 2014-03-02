@@ -13,9 +13,17 @@ set :ssh_options, {
 }
 
 ############################################
-# Setup Git
+# Setup project
 ############################################
-set :git_strategy, SubmoduleStrategy
+
 set :application, "wp-deploy"
+set :git_strategy, SubmoduleStrategy
 set :repo_url, "git@github.com:Mixd/wp-deploy.git"
 set :scm, :git
+
+############################################
+# Linked files and directories (symlinks)
+############################################
+
+# set :linked_files, %w{wp-config.php .htaccess}
+set :linked_dirs, %w{content/uploads}
