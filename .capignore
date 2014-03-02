@@ -1,0 +1,7 @@
+/lib
+/config
+Capfile
+Gemfile
+.gitattributes
+.gitignore
+.gitmodules
