@@ -2,10 +2,18 @@
 lock '3.1.0'
 
 ############################################
+# WordPress
+############################################
+
+set :wp_user, "support@mixd.co.uk" # The admin username
+set :wp_email, "support@mixd.co.uk" # The admin email address
+set :wp_sitename, "WP Deploy" # The site title
+
+############################################
 # Setup Capistrano
 ############################################
 
-set :log_level, :info
+#set :log_level, :info
 set :use_sudo, false
 
 set :ssh_options, {
@@ -25,5 +33,5 @@ set :scm, :git
 # Linked files and directories (symlinks)
 ############################################
 
-# set :linked_files, %w{wp-config.php .htaccess}
+set :linked_files, %w{wp-config.php}
 set :linked_dirs, %w{content/uploads}

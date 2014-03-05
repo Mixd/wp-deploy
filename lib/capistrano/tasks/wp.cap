@@ -1,0 +1,58 @@
+namespace :wp do
+
+  desc "Generates wp-config.php on remote server"
+  task :generate_remote_config do
+    on roles(:web) do
+
+      # Get details for WordPress config file
+      secret_keys = capture("curl -s -k https://api.wordpress.org/secret-key/1.1/salt")
+      wp_siteurl = fetch(:stage_url)
+      database = YAML::load_file('config/database.yml')[fetch(:stage).to_s]
+
+      # Create config file in remote environment
+      db_config = ERB.new(File.read('config/templates/wp-config.php.erb')).result(binding)
+      io = StringIO.new(db_config)
+      upload! io, File.join(shared_path, "wp-config.php")
+      
+    end
+  end
+
+  desc "Initial setup of WordPress environment"
+  task :setup do
+    on roles(:web) do
+      
+      invoke 'wp:generate_remote_config'
+      
+      within release_path do
+
+        # Generate a random password
+        o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+        password = (0...18).map { o[rand(o.length)] }.join
+
+        # Get WP details from config in /config
+        wp_siteurl = fetch(:stage_url)
+        title = fetch(:wp_sitename)
+        email = fetch(:wp_email)
+        user = fetch(:wp_user)
+
+        # Install WordPress
+        execute :wp, "core install --url='#{wp_siteurl}' --title='#{title}' --admin_user='#{user}' --admin_password='#{password}' --admin_email='#{email}'"
+      
+        puts <<-WARN
+        \e[32m
+        =========================================================================
+          WordPress has successfully been installed. Here are your login details:
+          
+          Username:       #{user}
+          Password:       #{password}
+          Email address:  #{email}
+          Admin panel:    #{wp_siteurl}/wordpress/wp-admin
+        =========================================================================
+        \e[0m
+        WARN
+
+      end  
+    end
+  end
+
+end
