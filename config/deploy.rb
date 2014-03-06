@@ -35,3 +35,16 @@ set :scm, :git
 
 set :linked_files, %w{wp-config.php}
 set :linked_dirs, %w{content/uploads}
+
+namespace :deploy do	
+
+  desc "create WordPress files for symlinking"
+  task :create_wp_files do
+    on roles(:app) do
+      execute :touch, "#{shared_path}/wp-config.php"
+    end
+  end
+  
+  after 'check:make_linked_dirs', :create_wp_files
+
+end
