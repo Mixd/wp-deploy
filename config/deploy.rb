@@ -8,6 +8,7 @@ lock '3.1.0'
 set :wp_user, "support@mixd.co.uk" # The admin username
 set :wp_email, "support@mixd.co.uk" # The admin email address
 set :wp_sitename, "WP Deploy" # The site title
+set :wp_localurl, "http://wpdeploy" # Your local environment URL
 
 ############################################
 # Setup Capistrano
