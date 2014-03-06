@@ -13,7 +13,20 @@ namespace :wp do
       db_config = ERB.new(File.read('config/templates/wp-config.php.erb')).result(binding)
       io = StringIO.new(db_config)
       upload! io, File.join(shared_path, "wp-config.php")
-      
+
+      # Create config file in remote environment
+      accessfile = ERB.new(File.read('config/templates/.htaccess.erb')).result(binding)
+      io = StringIO.new(accessfile)
+      upload! io, File.join(shared_path, ".htaccess")
+    end
+    # Set some permissions
+    invoke 'wp:set_permissions'
+  end
+
+  task :set_permissions do
+    on roles(:app) do
+      execute :chmod, "666 #{shared_path}/.htaccess"
+      execute :chmod, "-R 777 #{shared_path}/content/uploads"
     end
   end
 

@@ -33,7 +33,7 @@ set :scm, :git
 # Linked files and directories (symlinks)
 ############################################
 
-set :linked_files, %w{wp-config.php}
+set :linked_files, %w{wp-config.php .htaccess}
 set :linked_dirs, %w{content/uploads}
 
 namespace :deploy do	
@@ -42,6 +42,7 @@ namespace :deploy do
   task :create_wp_files do
     on roles(:app) do
       execute :touch, "#{shared_path}/wp-config.php"
+      execute :touch, "#{shared_path}/.htaccess"
     end
   end
   
