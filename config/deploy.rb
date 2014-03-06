@@ -48,4 +48,18 @@ namespace :deploy do
   
   after 'check:make_linked_dirs', :create_wp_files
 
+  desc "Creates robots.txt for non-production envs"
+  task :create_robots do
+  	on roles(:app) do
+  		if fetch(:stage) != :production then
+
+		    io = StringIO.new('User-agent: *
+Disallow: /')
+		    upload! io, File.join(release_path, "robots.txt")
+      end
+  	end
+  end
+
+  after :finished, :create_robots
+
 end
