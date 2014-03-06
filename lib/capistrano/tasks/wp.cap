@@ -19,10 +19,10 @@ namespace :wp do
 
   desc "Initial setup of WordPress environment"
   task :setup do
+    invoke 'deploy'
+    invoke 'wp:generate_remote_config'
     on roles(:web) do
-      
-      invoke 'wp:generate_remote_config'
-      
+            
       within release_path do
 
         # Generate a random password
@@ -36,7 +36,7 @@ namespace :wp do
         user = fetch(:wp_user)
 
         # Install WordPress
-        execute :wp, "core install --url='#{wp_siteurl}' --title='#{title}' --admin_user='#{user}' --admin_password='#{password}' --admin_email='#{email}'"
+         execute :wp, "core install --url='#{wp_siteurl}' --title='#{title}' --admin_user='#{user}' --admin_password='#{password}' --admin_email='#{email}'"
       
         puts <<-WARN
         \e[32m

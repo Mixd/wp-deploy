@@ -31,4 +31,4 @@ DEPENDENCIES
   capistrano (~> 3.0)
   capistrano-bundler (~> 1.1)
   capistrano-ext
-  highline
+  highline (~> 1.6.21)
