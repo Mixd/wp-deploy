@@ -68,4 +68,19 @@ namespace :wp do
     end
   end
 
+  desc "Setup local WordPress environment"
+    task :setup_local do
+      run_locally do
+        
+        wp_siteurl = fetch(:wp_localurl)
+
+        # Create wp-config.php
+        database = YAML::load_file('config/database.yml')['local']
+        secret_keys = capture("curl -s -k https://api.wordpress.org/secret-key/1.1/salt")
+        db_config = ERB.new(File.read('config/templates/wp-config.php.erb')).result(binding)
+        File.open("wp-config.php", 'w') {|f| f.write(db_config) }
+
+      end
+    end
+
 end
