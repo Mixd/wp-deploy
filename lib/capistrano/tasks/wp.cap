@@ -67,6 +67,7 @@ namespace :wp do
               Username:       #{user}
               Password:       #{password}
               Email address:  #{email}
+              Log in at:      #{wp_siteurl}/wordpress/wp-admin
             =========================================================================
             \e[0m
             MSG
