@@ -2,13 +2,23 @@
 lock '3.1.0'
 
 ############################################
-# WordPress
+# Setup WordPress
 ############################################
 
 set :wp_user, "support@mixd.co.uk" # The admin username
 set :wp_email, "support@mixd.co.uk" # The admin email address
 set :wp_sitename, "WP Deploy" # The site title
 set :wp_localurl, "http://wpdeploy" # Your local environment URL
+
+############################################
+# Setup project
+############################################
+
+set :application, "wp-deploy"
+set :repo_url, "git@github.com:Mixd/wp-deploy.git"
+set :scm, :git
+
+set :git_strategy, SubmoduleStrategy
 
 ############################################
 # Setup Capistrano
@@ -20,15 +30,6 @@ set :use_sudo, false
 set :ssh_options, {
   forward_agent: true
 }
-
-############################################
-# Setup project
-############################################
-
-set :application, "wp-deploy"
-set :git_strategy, SubmoduleStrategy
-set :repo_url, "git@github.com:Mixd/wp-deploy.git"
-set :scm, :git
 
 ############################################
 # Linked files and directories (symlinks)
