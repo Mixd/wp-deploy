@@ -10,19 +10,6 @@ namespace :wp do
 
   namespace :setup do
 
-    desc "Setup WP on remote and local environments"
-    task :all do
-      set :setup_all, true
-
-      # Generate a random password
-      o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-      password = (0...18).map { o[rand(o.length)] }.join
-      set :wp_pass, password
-
-      invoke "wp:setup:remote"
-      invoke "wp:setup:local"
-    end
-
     desc "Generates wp-config.php on remote server"
     task :generate_remote_files do
       on roles(:web) do
@@ -46,7 +33,7 @@ namespace :wp do
       invoke 'wp:set_permissions'
     end
 
-    desc "Initial setup of WordPress environment"
+    desc "Setup WP on remote environment"
     task :remote do
       invoke 'deploy'
       invoke 'wp:setup:generate_remote_files'
@@ -89,7 +76,7 @@ namespace :wp do
       end
     end
     
-    desc "Setup local WordPress environment"
+    desc "Setup WP on local environment"
     task :local do
       run_locally do
 
@@ -130,6 +117,20 @@ namespace :wp do
         
 
       end
+    end
+
+    desc "Setup WP on remote and local environments"
+    task :both do
+      set :setup_all, true
+
+      # Generate a random password
+      o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+      password = (0...18).map { o[rand(o.length)] }.join
+      set :wp_pass, password
+
+      # Setup remote and local envs
+      invoke "wp:setup:remote"
+      invoke "wp:setup:local"
     end
   end
 
