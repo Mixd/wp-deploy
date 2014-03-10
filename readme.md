@@ -65,6 +65,10 @@ This is where you define your SSH access to the remote server, and the full path
 
 You also need to rename `database.example.yml` to `database.yml` and fill it with the database details for each environment, including your local one. This file should stay ignored in git.
 
+### .wpignore
+
+By default, Capistrano deploys every file within in your repo, including config files, dotfiles, and various other stuff that's of no use on your remote environment. To get around this, wp-deploy uses a `.wpignore` file which lists all files and directories you don't want to be deployed, in a similar way to how `.gitginore` prevents files from being checked into your repo.
+
 Getting started
 ---------------
 
@@ -115,5 +119,7 @@ $ bundle exec cap production db:backup
 That will save an `.sql` file into a local `db_backups/` directory within your project. All `.sql` files are – and should stay – git ignored.
 
 ### Syncing uploads
+
+### Updating WordPress core
 
 ### Quick deployments
