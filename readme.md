@@ -6,7 +6,8 @@ A framework for deploying WordPress projects with Capistrano:
 - Automates WordPress installations on any number of environments (including local)
 - Automates database migrations between environments
 - Removes all references to development URLs in production environments (and vice versa)
-- Automatically sychronises your `uploads/` directories
+- Automatically sychronises your WordPress `uploads/` directories
+- Automatically prevents non-production environments from being crawled by search engines
 - Helps keep deployment configs consistent across your team
 
 Requirements
@@ -87,7 +88,31 @@ You can define either `production` or `staging` in any command to deploy to diff
 Usage
 -----
 
-### database migrations
+### Database migrations
+
+__WARNING__: Always use caution when migrating databases on live production environments – This cannot be undone and can cause some pretty serious issues if you're not fully aware of what you're doing.
+
+Migrating databases will also automatically replace development URLs from production databases and vice versa.
+
+To push your local database to the remote evironment:
+
+```sh
+$ bundle exec cap production db:push
+```
+
+To pull the remote database into your local evironment:
+
+```sh
+$ bundle exec cap production db:pull
+```
+
+To take a backup of the remote database (without importing to your local env.):
+
+```sh
+$ bundle exec cap production db:backup
+```
+
+That will save an `.sql` file into a local `db_backups/` directory within your project. All `.sql` files are – and should stay – git ignored.
 
 ### Syncing uploads
 
