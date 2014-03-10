@@ -20,7 +20,7 @@ Dependencies
 ---------------
 Install Ruby dependencies using Bundler:
 
-```
+```sh
 $ bundle install
 ```
 
@@ -28,7 +28,7 @@ wp-deploy also requires WP-CLI to be installed on all environments. See [the WP-
 
 If you're using MAMP, you'll have issues when trying to run MySQL commands as the PHP version in MAMP is different to the one in your $PATH. You can fix this by adding the following two lines to your `.bash_profile` (or `.zshrc`):
 
-```
+```sh
 export MAMP_PHP=/Applications/MAMP/bin/php/php5.4.4/bin
 export PATH="$MAMP_PHP:$PATH"
 ```
@@ -39,7 +39,7 @@ Configuration
 
 First off, you need to set your global WP settings under the "WordPress" heading in `config/deploy.rb`:
 
-```
+```ruby
 set :wp_user, "aaronthomas" # The admin username
 set :wp_email, "aaron@example.com" # The admin email address
 set :wp_sitename, "WP Deploy" # The site title
@@ -48,14 +48,14 @@ set :wp_localurl, "http://localhost" # Your local environment URL
 
 These are the settings used for your inital installation of WordPress. You also need to define your git repository in the same file:
 
-```
+```ruby
 set :application, "wp-deploy"
 set :repo_url, "git@github.com:Mixd/wp-deploy.git"
 ```
 
 wp-deploy starts you with 2 environments: staging and production. You need to set up your individual environment settings in `config/deploy/staging.rb` and `config/deploy/production.rb`:
 
-```
+```ruby
 set :stage_url, "http://www.example.com"
 server "XXX.XXX.XX.XXX", user: "SSHUSER", roles: %w{web app db}
 set :deploy_to, "/deploy/to/path"
@@ -69,7 +69,7 @@ Getting started
 
 To set up WordPress on your remote server, run the following command:
 
-```
+```sh
 $ bundle exec cap production wp:setup:remote
 ```
 This will install WordPress using the details in your configuration files, and make your first deployment on your production server. wp-deploy will generate a random password and give it to you at the end of the task, so be sure to write it down and change it to something more momorable when you log in.
@@ -78,7 +78,7 @@ You can also automate the set-up of your local environment too, using `wp:setup:
 
 To make future deployments, use:
 
-```
+```sh
 $ bundle exec cap production deploy
 ```
 
