@@ -7,7 +7,6 @@ namespace :wp do
     end
   end
 
-
   namespace :setup do
 
     desc "Generates wp-config.php on remote server"
@@ -73,12 +72,14 @@ namespace :wp do
             MSG
           end
 
-        end  
+        end
+
       end
     end
     
     desc "Setup WP on local environment"
     task :local do
+      
       run_locally do
 
         if !fetch(:setup_all)
@@ -116,7 +117,6 @@ namespace :wp do
         \e[0m
         MSG
         
-
       end
     end
 
