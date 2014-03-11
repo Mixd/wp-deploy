@@ -120,6 +120,12 @@ That will save an `.sql` file into a local `db_backups/` directory within your p
 
 ### Syncing uploads
 
+You can bring your WordPress uploads directory up-to-date on both local and remote environments up to date with the same command:
+
+```sh
+$ bundle exec cap production uploads:sync
+```
+
 ### Updating WordPress core
 
 ### Quick deployments
