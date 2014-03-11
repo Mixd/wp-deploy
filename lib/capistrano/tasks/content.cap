@@ -1,0 +1,17 @@
+namespace :uploads do
+
+  desc "Syncs uploads directory from local to remote"
+  task :sync do
+  
+  	run_locally do
+  		roles(:all).each do |role|
+
+			    execute :rsync, "-avzO #{role.user}@#{role.hostname}:#{shared_path}/content/uploads/ content/uploads"
+			    execute :rsync, "-avzO content/uploads/ #{role.user}@#{role.hostname}:#{shared_path}/content/uploads"
+
+		  end
+	  end
+
+  end
+
+end
