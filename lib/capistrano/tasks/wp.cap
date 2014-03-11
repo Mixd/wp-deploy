@@ -135,4 +135,18 @@ namespace :wp do
     end
   end
 
+  namespace :core do
+    desc "Updates the WP core submodule to the latest tag"
+    task :update do
+      system('
+      cd wordpress
+      git fetch --tags
+      latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      git checkout $latestTag
+      ')
+      puts "WordPress submodule is now at the latest version. You should now commit your changes."
+
+    end
+  end
+
 end

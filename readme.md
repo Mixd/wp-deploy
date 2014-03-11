@@ -128,4 +128,8 @@ $ bundle exec cap production uploads:sync
 
 ### Updating WordPress core
 
-### Quick deployments
+To update the WordPress submodule to the latest version, run:
+
+```sh
+$ bundle exec cap production wp:core:update
+```
