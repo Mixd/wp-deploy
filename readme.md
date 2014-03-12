@@ -9,7 +9,7 @@ A framework for deploying WordPress projects with Capistrano:
 - Sychronises your WordPress `uploads/` directories between environments
 - Automatically prevents non-production environments from being crawled by search engines
 
-Note that wp-deploy is pretty strict about how you work with WordPress and git, and it may be different to what you're used to. Be sure to read Notes on WordPress development(https://github.com/Mixd/wp-deploy/wiki/Notes-on-WordPress-development) before starting.
+Note that wp-deploy is pretty strict about how you work with WordPress and git, and it may be different to what you're used to. Be sure to read [Notes on WordPress development](https://github.com/Mixd/wp-deploy/wiki/Notes-on-WordPress-development) before starting.
 
 Requirements
 ------------
