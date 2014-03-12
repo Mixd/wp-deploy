@@ -41,12 +41,12 @@ Getting started
 
 Firstly, you need to recursively clone this repo and reinialise it as your own. wp-deploy comes with a bash script that does most of the leg work for you, so once you've cloned the repo just run:
 
-```
+```sh
 $ bash config/prepare.sh
 ```
 Then all you need to do is add your own remote origin repository:
 
-```
+```sh
 $ git remote add origin <repo_url>
 ```
 
