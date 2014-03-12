@@ -73,6 +73,17 @@ By default, Capistrano deploys every file within in your repo, including config 
 Getting started
 ---------------
 
+Firstly, you need to recursively clone this repo and reinialise it as your own. wp-deploy comes with a bash script that does most of the leg work for you, so once you've cloned the repo just run:
+
+```
+$ bash config/prepare.sh
+```
+Then all you need to do is add your own remote origin repository:
+
+```
+$ git remote add origin <repo_url>
+```
+
 To set up WordPress on your remote server, run the following command:
 
 ```sh
