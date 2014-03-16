@@ -36,6 +36,22 @@ export PATH="$MAMP_PHP:$PATH"
 ```
 Be sure you check the PHP version is correct and amend the path appropriately for your MAMP PHP version. see [this question on Stack Overflow](http://stackoverflow.com/questions/4145667/how-to-override-the-path-of-php-to-use-the-mamp-path/) for more info.
 
+Getting started
+---------------
+
+Firstly, you need to recursively clone this repo and reinialise it as your own. wp-deploy comes with a bash script that does most of the leg work for you, so once you've cloned the repo just run:
+
+```sh
+$ bash config/prepare.sh
+```
+Then all you need to do is add your own remote origin repository:
+
+```sh
+$ git remote add origin <repo_url>
+```
+
+You're then ready to set up your configuration files.
+
 Configuration
 ---------------
 
@@ -61,6 +77,7 @@ wp-deploy starts you with 2 environments: staging and production. You need to se
 set :stage_url, "http://www.example.com"
 server "XXX.XXX.XX.XXX", user: "SSHUSER", roles: %w{web app db}
 set :deploy_to, "/deploy/to/path"
+set :branch, "master"
 ```
 This is where you define your SSH access to the remote server, and the full path which you plan to deploy to. the `stage_url` is used when generating your `wp-config.php` file during installation.
 
@@ -70,28 +87,31 @@ You also need to rename `database.example.yml` to `database.yml` and fill it wit
 
 By default, Capistrano deploys every file within in your repo, including config files, dotfiles, and various other stuff that's of no use on your remote environment. To get around this, wp-deploy uses a `.wpignore` file which lists all files and directories you don't want to be deployed, in a similar way to how `.gitginore` prevents files from being checked into your repo.
 
-Getting started
----------------
 
-To set up WordPress on your remote server, run the following command:
+Usage
+-----
+
+### Setting up environments
+
+To set up WordPress on your remote production server, run the following command:
 
 ```sh
 $ bundle exec cap production wp:setup:remote
 ```
+
 This will install WordPress using the details in your configuration files, and make your first deployment on your production server. wp-deploy will generate a random password and give it to you at the end of the task, so be sure to write it down and change it to something more momorable when you log in.
 
 You can also automate the set-up of your local environment too, using `wp:setup:local`, or you can save time and set up both your remote and local environments with `wp:setup:both`.
 
-To make future deployments, use:
+### Deploying
+
+To deploy your codebase to the remote server:
 
 ```sh
 $ bundle exec cap production deploy
 ```
 
-You can define either `production` or `staging` in any command to deploy to different environments.
-
-Usage
------
+That will deploy everything in your repository and submodules, excluding any files and directories in your `.wpignore` file.
 
 ### Database migrations
 
