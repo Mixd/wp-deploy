@@ -3,12 +3,12 @@
 ############################################
 
 set :stage, :staging
-set :stage_url, "http://test.mixd.co.uk"
-server "staging-server-master-001.mixd.co.uk", user: "mixdsftpuser", roles: %w{web app db}
-set :deploy_to, "/var/www/vhosts/test.mixd.co.uk/httpdocs"
+set :stage_url, "http://www.example.com"
+server "XXX.XXX.XX.XXX", user: "SSHUSER", roles: %w{web app db}
+set :deploy_to, "/deploy/to/path"
 
 ############################################
 # Setup Git
 ############################################
 
-set :branch, "master"
+set :branch, "development"
