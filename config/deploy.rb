@@ -31,6 +31,8 @@ set :ssh_options, {
   forward_agent: true
 }
 
+set :keep_releases, 5
+
 ############################################
 # Linked files and directories (symlinks)
 ############################################
@@ -63,5 +65,6 @@ Disallow: /')
   end
 
   after :finished, :create_robots
+  after :finishing, "deploy:cleanup"
 
 end
