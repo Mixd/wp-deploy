@@ -60,6 +60,7 @@ namespace :deploy do
 		    io = StringIO.new('User-agent: *
 Disallow: /')
 		    upload! io, File.join(release_path, "robots.txt")
+        execute :chmod, "644 #{release_path}/robots.txt"
       end
   	end
   end
