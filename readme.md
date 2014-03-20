@@ -3,7 +3,7 @@ wp-deploy
 
 A framework for deploying WordPress projects with Capistrano:
 
-- Automates WordPress deployments on any number of environments
+- Automates WordPress deployments via git/github on any number of environments
 - Automates database migrations between environments
 - Removes all references to development URLs in production environments (and vice versa)
 - Sychronises your WordPress `uploads/` directories between environments
