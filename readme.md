@@ -39,7 +39,7 @@ Be sure you check the PHP version is correct and amend the path appropriately fo
 Getting started
 ---------------
 
-Firstly, you need to recursively clone this repo and reinialise it as your own. wp-deploy comes with a bash script that does most of the leg work for you, so once you've cloned the repo just run:
+Firstly, you need to clone this repo and reinialise it as your own. wp-deploy comes with a bash script that does most of the leg work for you, so once you've cloned the repo just run:
 
 ```sh
 $ bash config/prepare.sh
