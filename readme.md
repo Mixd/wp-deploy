@@ -16,8 +16,8 @@ For wp-deploy (or Capistrano in general) to work you need SSH access both betwee
 
 Capistrano deploys your application into a symlinked `current/` directory on your server, so you'll need to set your document root to that folder.
 
-- *Bunder*: As WP-Deploy comes with various different Ruby Dependencies, Bundler is used to make quick work of the installation process. Here's the [link](http://bundler.io/)
-- *WP-CLI*: WP-Deploy also requires the automation of WordPress functions directly in the Command Line. As these functions are required on all environments (local, staging and production servers), we make use of the WordPress Command Line Interface. You can check out the [documentation](http://wp-cli.org/#install) on how to get this setup.s
+- **Bunder**: As WP-Deploy comes with various different Ruby Dependencies, Bundler is used to make quick work of the installation process. Here's the [link](http://bundler.io/)
+- **WP-CLI**: WP-Deploy also requires the automation of WordPress functions directly in the Command Line. As these functions are required on all environments (local, staging and production servers), we make use of the WordPress Command Line Interface. You can check out the [documentation](http://wp-cli.org/#install) on how to get this setup.s
 
 ### Keep in Mind
 If you're using MAMP, you'll have issues when trying to run MySQL commands as the PHP version in MAMP is different to the one in your $PATH. You can fix this by adding the following two lines to your `.bash_profile` (or `.zshrc`):
@@ -29,18 +29,23 @@ export PATH="$MAMP_PHP:$PATH"
 
 Be sure you check the PHP version is correct and amend the path appropriately for your MAMP PHP version. see [this question on Stack Overflow](http://stackoverflow.com/questions/4145667/how-to-override-the-path-of-php-to-use-the-mamp-path/) for more info.
 
-Install Ruby dependencies using Bundler:
+- - -
 
+## Installation
+Here's a step by step guide of getting **WP-Deploy** setup.
+
+### Getting started
+
+Firstly, you're going to need to clone the repository. There are a number of ways in which you can do this, however, seeing as this workflow requires the use of the Command Line, I'd recommend doing it in that.
+
+```sh
+cd my/desired/directory
+git clone --recursive https://github.com/Mixd/wp-deploy.git new-project
 ```
-$ bundle install
-```
 
-wp-deploy also requires WP-CLI to be installed on all environments. See [the WP-CLI docs](http://wp-cli.org/#install) on how how to install it.
+That will clone the repository into a folder name of your choosing and it'll also download any submodules included within the repository. In this case, we have included WordPress.
 
-Getting started
----------------
-
-Firstly, you need to clone this repo and reinialise it as your own. wp-deploy comes with a bash script that does most of the leg work for you, so once you've cloned the repo just run:
+Next, we need to reinialise it as its own repository rather than having it connected to the current origin. We've create a simple bash script that does most of the leg work for you, so once you've cloned the repo just run:
 
 ```sh
 $ bash config/prepare.sh
@@ -51,10 +56,15 @@ Then all you need to do is add your own remote origin repository:
 $ git remote add origin <repo_url>
 ```
 
-You're then ready to set up your configuration files.
+And finally, install the Ruby dependencies for the framework via Bundler:
 
-Configuration
----------------
+```sh
+$ bundle install
+```
+
+You're now ready to set up your configuration files.
+
+### Configuration
 
 First off, you need to set your global WP settings under the "WordPress" heading in `config/deploy.rb`:
 
@@ -84,15 +94,14 @@ This is where you define your SSH access to the remote server, and the full path
 
 You also need to rename `database.example.yml` to `database.yml` and fill it with the database details for each environment, including your local one. This file should stay ignored in git.
 
-### .wpignore
+#### .wpignore
 
 By default, Capistrano deploys every file within in your repo, including config files, dotfiles, and various other stuff that's of no use on your remote environment. To get around this, wp-deploy uses a `.wpignore` file which lists all files and directories you don't want to be deployed, in a similar way to how `.gitginore` prevents files from being checked into your repo.
 
 
-Usage
------
+### Usage
 
-### Setting up environments
+#### Setting up environments
 
 To set up WordPress on your remote production server, run the following command:
 
@@ -104,7 +113,7 @@ This will install WordPress using the details in your configuration files, and m
 
 You can also automate the set-up of your local environment too, using `wp:setup:local`, or you can save time and set up both your remote and local environments with `wp:setup:both`.
 
-### Deploying
+#### Deploying
 
 To deploy your codebase to the remote server:
 
@@ -114,7 +123,7 @@ $ bundle exec cap production deploy
 
 That will deploy everything in your repository and submodules, excluding any files and directories in your `.wpignore` file.
 
-### Database migrations
+#### Database migrations
 
 __WARNING__: Always use caution when migrating databases on live production environments – This cannot be undone and can cause some pretty serious issues if you're not fully aware of what you're doing.
 
@@ -140,7 +149,7 @@ $ bundle exec cap production db:backup
 
 That will save an `.sql` file into a local `db_backups/` directory within your project. All `.sql` files are – and should stay – git ignored.
 
-### Syncing uploads
+#### Syncing uploads
 
 You can bring your WordPress uploads directory up-to-date on both local and remote environments up to date with the same command:
 
@@ -148,7 +157,7 @@ You can bring your WordPress uploads directory up-to-date on both local and remo
 $ bundle exec cap production uploads:sync
 ```
 
-### Updating WordPress core
+#### Updating WordPress core
 
 To update the WordPress submodule to the latest version, run:
 
