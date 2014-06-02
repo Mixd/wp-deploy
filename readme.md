@@ -1,5 +1,4 @@
-wp-deploy
-=========
+# wp-deploy
 
 A framework for deploying WordPress projects with Capistrano:
 
@@ -11,30 +10,32 @@ A framework for deploying WordPress projects with Capistrano:
 
 Note that wp-deploy is pretty strict about how you work with WordPress and git, and it may be different to what you're used to. Be sure to read [Notes on WordPress development](https://github.com/Mixd/wp-deploy/wiki/Notes-on-WordPress-development) before starting.
 
-Requirements
-------------
+## Requirements
 
 For wp-deploy (or Capistrano in general) to work you need SSH access both between your local machine and your remote server, and between your local machine and your GitHub account.
 
 Capistrano deploys your application into a symlinked `current/` directory on your server, so you'll need to set your document root to that folder.
 
-Dependencies
----------------
-Install Ruby dependencies using Bundler:
+- *Bunder*: As WP-Deploy comes with various different Ruby Dependencies, Bundler is used to make quick work of the installation process. Here's the [link](http://bundler.io/)
+- *WP-CLI*: WP-Deploy also requires the automation of WordPress functions directly in the Command Line. As these functions are required on all environments (local, staging and production servers), we make use of the WordPress Command Line Interface. You can check out the [documentation](http://wp-cli.org/#install) on how to get this setup.s
 
-```sh
-$ bundle install
-```
-
-wp-deploy also requires WP-CLI to be installed on all environments. See [the WP-CLI docs](http://wp-cli.org/#install) on how how to install it.
-
+### Keep in Mind
 If you're using MAMP, you'll have issues when trying to run MySQL commands as the PHP version in MAMP is different to the one in your $PATH. You can fix this by adding the following two lines to your `.bash_profile` (or `.zshrc`):
 
 ```sh
 export MAMP_PHP=/Applications/MAMP/bin/php/php5.4.4/bin
 export PATH="$MAMP_PHP:$PATH"
 ```
+
 Be sure you check the PHP version is correct and amend the path appropriately for your MAMP PHP version. see [this question on Stack Overflow](http://stackoverflow.com/questions/4145667/how-to-override-the-path-of-php-to-use-the-mamp-path/) for more info.
+
+Install Ruby dependencies using Bundler:
+
+```
+$ bundle install
+```
+
+wp-deploy also requires WP-CLI to be installed on all environments. See [the WP-CLI docs](http://wp-cli.org/#install) on how how to install it.
 
 Getting started
 ---------------
