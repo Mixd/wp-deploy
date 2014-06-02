@@ -1,15 +1,15 @@
 staging:
+  host: localhost
   database: db_name
   username: db_user
   password: 'db_pass'
-  host: localhost
 production:
+  host: localhost
   database: db_name
   username: db_user
   password: 'db_pass'
-  host: localhost
 local:
+  host: localhost
   database: db_name
   username: root
   password: 'root'
-  host: localhost
