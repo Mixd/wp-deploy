@@ -4,7 +4,7 @@
     define('DB_PASSWORD', '<%= database['password'] %>');
     define('DB_HOST', '<%= database['host'] %>');
     define('DB_CHARSET', 'utf8');
-    define('DB_COLLATE', ''); 
+    define('DB_COLLATE', '');
 	define('WPLANG', '');
 
 	$table_prefix  = 'wp_';
@@ -15,7 +15,7 @@
 	define('WP_SITEURL','<%= wp_siteurl %>/wordpress');
 
 	define('WP_CONTENT_URL', '<%= wp_siteurl %>/content');
-	define('WP_CONTENT_DIR', realpath($_SERVER['DOCUMENT_ROOT'] . '/content'));
+  define('WP_CONTENT_DIR', realpath(dirname(__FILE__) . '/content'));
 
 	if ( !defined('ABSPATH') )
 	        define('ABSPATH', dirname(__FILE__) . '/');
