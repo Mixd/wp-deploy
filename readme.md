@@ -98,6 +98,10 @@ You also need to rename `database.example.yml` to `database.yml` and fill it wit
 
 By default, Capistrano deploys every file within in your repo, including config files, dotfiles, and various other stuff that's of no use on your remote environment. To get around this, wp-deploy uses a `.wpignore` file which lists all files and directories you don't want to be deployed, in a similar way to how `.gitginore` prevents files from being checked into your repo.
 
+#### Slack Integration
+
+wp-deploy makes use of [capistrano-slackify](https://github.com/onthebeach/capistrano-slackify) to trigger deployment notifactions to Slack. This is optional, but can be pretty handy if you're a Slack user. You just need to add your Slack incoming webhook token and subdomain in the `config/slack.rb` and you're good to go.
+
 
 ### Usage
 

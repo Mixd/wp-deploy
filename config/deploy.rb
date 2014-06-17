@@ -1,6 +1,9 @@
 # config valid only for Capistrano 3.1
 lock '3.1.0'
 
+# require Slack config
+require './config/slack'
+
 ############################################
 # Setup WordPress
 ############################################
@@ -40,7 +43,7 @@ set :keep_releases, 5
 set :linked_files, %w{wp-config.php .htaccess}
 set :linked_dirs, %w{content/uploads}
 
-namespace :deploy do	
+namespace :deploy do
 
   desc "create WordPress files for symlinking"
   task :create_wp_files do
@@ -49,7 +52,7 @@ namespace :deploy do
       execute :touch, "#{shared_path}/.htaccess"
     end
   end
-  
+
   after 'check:make_linked_dirs', :create_wp_files
 
   desc "Creates robots.txt for non-production envs"

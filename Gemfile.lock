@@ -5,6 +5,9 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (~> 1.3)
+    capistrano-slackify (1.0.0)
+      capistrano (>= 3.1.0)
+      yajl-ruby
     i18n (0.6.9)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -17,9 +20,11 @@ GEM
     term-ansicolor (1.3.0)
       tins (~> 1.0)
     tins (1.0.0)
+    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   capistrano (~> 3.0)
+  capistrano-slackify
