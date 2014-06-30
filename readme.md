@@ -92,6 +92,8 @@ set :branch, "master"
 ```
 This is where you define your SSH access to the remote server, and the full path which you plan to deploy to. the `stage_url` is used when generating your `wp-config.php` file during installation.
 
+`server` can be an IP address or domain; prefixing with `http://` is not needed either way. 
+
 You also need to rename `database.example.yml` to `database.yml` and fill it with the database details for each environment, including your local one. This file should stay ignored in git.
 
 #### .wpignore
