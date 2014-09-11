@@ -16,7 +16,7 @@ For wp-deploy (or Capistrano in general) to work you need SSH access both betwee
 
 Capistrano deploys your application into a symlinked `current/` directory on your server, so you'll need to set your document root to that folder.
 
-- **Bunder**: As WP-Deploy comes with various different Ruby Dependencies, Bundler is used to make quick work of the installation process. Here's the [link](http://bundler.io/)
+- **Bundler**: As WP-Deploy comes with various different Ruby Dependencies, Bundler is used to make quick work of the installation process. Here's the [link](http://bundler.io/)
 - **WP-CLI**: WP-Deploy also requires the automation of WordPress functions directly in the Command Line. As these functions are required on all environments (local, staging and production servers), we make use of the WordPress Command Line Interface. You can check out the [documentation](http://wp-cli.org/#install) on how to get this setup.s
 
 ### Keep in Mind
