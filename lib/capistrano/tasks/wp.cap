@@ -144,6 +144,7 @@ namespace :wp do
       latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
       git checkout $latestTag
       ')
+      invoke 'cache:repo:purge'
       puts "WordPress submodule is now at the latest version. You should now commit your changes."
 
     end
