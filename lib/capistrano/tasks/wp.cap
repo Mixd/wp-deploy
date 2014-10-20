@@ -128,6 +128,11 @@ namespace :wp do
     task :both do
       set :setup_all, true
 
+      # Setup both only works with a database.yml file
+      if !File.exists?('config/database.yml') || (ENV['db_host'] || ENV['db_name'] || ENV['db_user'] || ENV['db_password'])
+        raise "Setup both only works with a database.yml file."
+      end
+
       # Generate a random password
       o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
       password = (0...18).map { o[rand(o.length)] }.join
