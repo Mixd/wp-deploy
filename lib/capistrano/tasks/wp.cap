@@ -16,7 +16,9 @@ namespace :wp do
         # Get details for WordPress config file
         secret_keys = capture("curl -s -k https://api.wordpress.org/secret-key/1.1/salt")
         wp_siteurl = fetch(:stage_url)
-        database = YAML::load_file('config/database.yml')[fetch(:stage).to_s]
+
+        # Load database configuration
+        database = load_database_configuration(fetch(:stage).to_s)
 
         # Create config file in remote environment
         db_config = ERB.new(File.read('config/templates/wp-config.php.erb')).result(binding)
@@ -96,8 +98,10 @@ namespace :wp do
         user = fetch(:wp_user)
         wp_siteurl = fetch(:wp_localurl)
 
+        # Load database configuration
+        database = load_database_configuration('local')
+
         # Create wp-config.php
-        database = YAML::load_file('config/database.yml')['local']
         secret_keys = capture("curl -s -k https://api.wordpress.org/secret-key/1.1/salt")
         db_config = ERB.new(File.read('config/templates/wp-config.php.erb')).result(binding)
         File.open("wp-config.php", 'w') {|f| f.write(db_config) }
@@ -123,6 +127,11 @@ namespace :wp do
     desc "Setup WP on remote and local environments"
     task :both do
       set :setup_all, true
+
+      # Setup both only works with a database.yml file
+      if !File.exists?('config/database.yml') || (ENV['db_host'] || ENV['db_name'] || ENV['db_user'] || ENV['db_password'])
+        raise "Setup both only works with a database.yml file."
+      end
 
       # Generate a random password
       o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
@@ -150,4 +159,36 @@ namespace :wp do
     end
   end
 
+end
+
+# Loads and returns the database configuration as a hash.
+# 
+# If `db_host`, `db_name`, `db_user` and `db_password` are passed on the command line,
+# those values are used for the database configuration. Otherwise, the configuration
+# is loaded from a `config/database.yml` file.
+# 
+# If neither of those are present, an exception is raised.
+def load_database_configuration(environment)
+  if ENV['db_host'] && ENV['db_name'] && ENV['db_user'] && ENV['db_password']
+    database = {
+      'host' => ENV['db_host'],
+      'database' => ENV['db_name'],
+      'username' => ENV['db_user'],
+      'password' => ENV['db_password']
+    }
+  elsif File.exists?('config/database.yml')
+    database = YAML::load_file('config/database.yml')[environment]
+  else
+    puts <<-MSG
+    \e[31m
+      Incomplete database configuration specified and no config/database.yml
+      file found. Specify db_host, db_name, db_user and db_password options
+      or create a config/database.yml file. See the readme for more info.
+    \e[0m
+    MSG
+
+    raise "Incorrect database configuration"
+  end
+
+  return database
 end
