@@ -3,13 +3,16 @@ staging:
   database: db_name
   username: db_user
   password: 'db_pass'
+  port: 3306
 production:
   host: localhost
   database: db_name
   username: db_user
   password: 'db_pass'
+  port: 3306
 local:
   host: localhost
   database: db_name
   username: root
   password: 'root'
+  port: 3306
