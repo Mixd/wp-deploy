@@ -5,27 +5,124 @@
     define('DB_HOST', '<%= database['host'] %>');
     define('DB_CHARSET', 'utf8');
     define('DB_COLLATE', '');
-	define('WPLANG', '');
+    define('WPLANG', '');
 
-	$table_prefix  = 'wp_';
+    $table_prefix  = 'wp_';
 
-	<%= secret_keys %>
+    <%= secret_keys %>
 
-	define('WP_HOME','<%= wp_siteurl %>');
-	define('WP_SITEURL','<%= wp_siteurl %>/wordpress');
+    define('WP_HOME','<%= wp_siteurl %>');
+    define('WP_SITEURL','<%= wp_siteurl %>/wordpress');
 
-	define('WP_CONTENT_URL', '<%= wp_siteurl %>/content');
+    define('WP_CONTENT_URL', '<%= wp_siteurl %>/content');
 
-  /*
-  Depending on your server configuration, you may find WordPress fails to find your content (themes and plugins).
-  This is due to how your server returns `$_SERVER['DOCUMENT_ROOT']`. If this issue affects you, try swapping
-  for the `dirname(__FILE__)` method below.
-  */
+    /*
+    Depending on your server configuration, you may find WordPress fails to find your content (themes and plugins).
+    This is due to how your server returns `$_SERVER['DOCUMENT_ROOT']`. If this issue affects you, try swapping
+    for the `dirname(__FILE__)` method below.
+    */
+    // define('WP_CONTENT_DIR', realpath(dirname(__FILE__) . '/content'));
+    // define('WP_CONTENT_DIR', realpath($_SERVER['DOCUMENT_ROOT'] . '/content'));
 
-  // define('WP_CONTENT_DIR', realpath(dirname(__FILE__) . '/content'));
-  define('WP_CONTENT_DIR', realpath($_SERVER['DOCUMENT_ROOT'] . '/content'));
+    //Determinate if called from a webserver or cli
+    if (array_key_exists('HTTP_HOST',$_SERVER)){
+        /*
+            $_SERVER['HTTP_HOST'] indicates that we are called from a webserver
+        */
+        define('WP_CONTENT_DIR', realpath($_SERVER['DOCUMENT_ROOT'] . '/content'));
+    } else if ((array_key_exists('SHELL',$_SERVER) or array_key_exists('TERM',$_SERVER))) {
+        /*
+            $_SERVER['SHELL'] and $_SERVER['TERM'] indicates that we are called from a cli.
+            On the next steps we try to find the who is calling the script(php or wp-cli).
+            
+         */
 
-	if ( !defined('ABSPATH') )
-	        define('ABSPATH', dirname(__FILE__) . '/');
 
-	require_once(ABSPATH . 'wp-settings.php');
+        /*
+            This is a local helper function. It checks the path and determinates if the path machtes common wp-cli names
+            and generates the WP_CONTENT_DIR based on the $_SERVER['DOCUMENT_ROOT'] which is
+            set by wp-cli (cf. https://github.com/wp-cli/wp-cli/blame/da99b8d9d186c4f38c7f773257583ae0bf664feb/php/WP_CLI/Runner.php#L175).
+            The $_SERVER['DOCUMENT_ROOT'] set by wp-cli is by default like /folder1/project_name/releases/20150127164613/wordpress,
+            and the corresponding WP_CONTENT_DIR is                        /folder1/project_name/releases/20150127164613/content.
+            If the function determinates wp-cli as the caller it removes the last '/wordpress' from the path an replaces it with '/content'
+            returns true if wp-cli found.
+         */
+        $check_path_for_wp_cli_and_define = function($path) {
+            $wp_cli_common_names_regex = '/^(wp|wp-cli)$/';
+
+            if (preg_match($wp_cli_common_names_regex,basename($path,".phar"))==1){
+                //if this is true, then we are called from wp-cli
+                define('WP_CONTENT_DIR', substr($_SERVER['DOCUMENT_ROOT'],0,strrpos( $_SERVER['DOCUMENT_ROOT'] , "/wordpress" , -1 ))."/content");
+                return true;
+            }
+
+            return false;
+        };
+
+        /*
+            This local helper function ist compareable to $check_path_for_wp_cli_and_define function. It checks the path opon common php names. 
+            The function sets the WP_CONTENT_DIR based on the relative location of wp-config.php(__FILE__) whtich is by default located 
+            at /folder1/project_name/share/wp-config.php. 
+
+
+         */
+        $check_path_for_pure_php_and_define = function($path) {
+            $php_cli_common_names_regex = '/^(php|php5)$/';
+            if (preg_match($php_cli_common_names_regex,basename($path))==1){
+                //if this is true, then we are called from wp-cli
+
+                define('WP_CONTENT_DIR', realpath(substr(dirname(__FILE__),0,strrpos( dirname(__FILE__) , "/shared" , -1 ))."/current" ). "/content");
+                return true;
+            } 
+
+            return false;
+        };
+
+        /*
+            Figure out who is call using args or some $_SERVER vars
+         */
+        if (array_key_exists("argv",$_SERVER) && (count($_SERVER['argv'])>0)){
+            /*
+                Hopefully we have some command arguments,
+                so the first argument will be the executable name
+             */
+
+            if ($check_path_for_wp_cli_and_define($_SERVER['argv'][0])){
+                //if this is true, then we are called from wp-cli
+            } else if (array_key_exists("_",$_SERVER) && $check_path_for_pure_php_and_define($_SERVER["_"])) {
+                //if this is true, then we are called from php
+            } else {
+                /*
+                    If we are here, we are called from cli which name doesn't mach cli known executables...
+                    this could happen if wp-cli is unexpectedly renamed or we are called in
+                    some differend and unexpected way from cli, so lets die.
+                 */
+                die ("Called from command line but not from wp-cli or php. Please check " . __FILE__ . " for further information.".PHP_EOL);
+            }
+
+        } else {
+            /*
+                Saddly we dont have command arguments, lets try so find the PHP command in some other variables
+             */
+            $known_keys = array("PHP_SELF","SCRIPT_NAME","SCRIPT_FILENAME","PATH_TRANSLATED");
+
+            foreach ($known_keys as $known_key){
+                if (array_key_exists($known_key,$_SERVER) && $check_path_for_wp_cli_and_define($_SERVER[$known_key])){
+                    break;
+                }
+            }
+            defined('WP_CONTENT_DIR') or die ("Called from command line, no arguments passed and common $_SERVER vars don't match common wp-cli names . Please check " . __FILE__ . " for further information.".PHP_EOL);
+        }
+
+    } else {
+        /*
+            Couldn't determinate caller let's die and let the developer fix the envirment
+         */
+        die("Couldn't determinate either called by webserver or by cli. Please check " . __FILE__ . " for further information.".PHP_EOL);
+    }
+
+
+    if ( !defined('ABSPATH') )
+        define('ABSPATH', dirname(__FILE__) . '/');
+
+    require_once(ABSPATH . 'wp-settings.php');
