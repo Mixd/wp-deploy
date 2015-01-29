@@ -32,14 +32,10 @@ namespace :wp do
       invoke 'wp:set_permissions'
     end
 
-    desc "Setup WP on remote environment"
-    task :remote do
-      invoke 'deploy'
-      invoke 'wp:setup:generate_remote_files'
+    desc "Install wordpress code"
+    task :wp_core_install do
       on roles(:web) do
-              
         within release_path do
-        
           if !fetch(:setup_all)
             # Generate a random password
             o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
@@ -58,23 +54,31 @@ namespace :wp do
           execute :wp, "core install --url='#{wp_siteurl}' --title='#{title}' --admin_user='#{user}' --admin_password='#{password}' --admin_email='#{email}'"
 
           if !fetch(:setup_all)
-            puts <<-MSG
-            \e[32m
-            =========================================================================
-              WordPress has successfully been installed. Here are your login details:
-              
-              Username:       #{user}
-              Password:       #{password}
-              Email address:  #{email}
-              Log in at:      #{wp_siteurl}/wordpress/wp-admin
-            =========================================================================
-            \e[0m
-            MSG
+            after "deploy:finished", :print_login_data do
+                puts <<-MSG
+                \e[32m
+                =========================================================================
+                WordPress has successfully been installed. Here are your login details:
+                
+                Username:       #{user}
+                Password:       #{password}
+                Email address:  #{email}
+                Log in at:      #{wp_siteurl}/wordpress/wp-admin
+                =========================================================================
+                \e[0m
+                MSG
+            end
           end
-
         end
-
       end
+    end
+
+
+    desc "Setup WP on remote environment"
+    task :remote do
+      after "deploy:symlink:shared", 'wp:setup:generate_remote_files'
+      after "deploy:updated", 'wp:setup:wp_core_install'
+      invoke 'deploy'
     end
     
     desc "Setup WP on local environment"
