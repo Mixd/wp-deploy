@@ -4,7 +4,7 @@ namespace :uploads do
   task :push do
     run_locally do
         roles(:all).each do |role|
-                execute :rsync, "-avzO content/uploads/ #{role.user}@#{role.hostname}:#{shared_path}/content/uploads"
+                execute :rsync, "-avzO content/uploads/ -e 'ssh -p #{role.port}' #{role.user}@#{role.hostname}:#{shared_path}/content/uploads"
           end
       end
   end
@@ -13,7 +13,7 @@ namespace :uploads do
   task :pull do
     run_locally do
         roles(:all).each do |role|
-                execute :rsync, "-avzO #{role.user}@#{role.hostname}:#{shared_path}/content/uploads/ content/uploads"
+                execute :rsync, "-avzO -e 'ssh -p #{role.port}' #{role.user}@#{role.hostname}:#{shared_path}/content/uploads/ content/uploads"
           end
       end
   end

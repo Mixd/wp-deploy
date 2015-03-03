@@ -4,7 +4,7 @@
 
 set :stage, :production
 set :stage_url, "http://www.example.com"
-server "XXX.XXX.XX.XXX", user: "SSHUSER", roles: %w{web app db}
+server "XXX.XXX.XX.XXX", user: "SSHUSER", port: 22, roles: %w{web app db}
 set :deploy_to, "/deploy/to/path"
 
 ############################################
