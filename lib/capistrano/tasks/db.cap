@@ -24,7 +24,7 @@ namespace :db do
   \033[31m
   ========================================================================
 
-    WARNING: You're about to overwrite the production database!
+    WARNING: You're about to overwrite the database!
     To continue, please enter the name of the database for this site.
 
     Datebase name:\033[0m \033[1m \033[34m #{database['database']} \033[0m \033[22m \033[31m
