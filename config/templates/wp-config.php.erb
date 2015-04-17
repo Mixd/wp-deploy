@@ -1,11 +1,11 @@
 <?php
-    define('DB_NAME', '<%= database['database'] %>');
-    define('DB_USER', '<%= database['username'] %>');
-    define('DB_PASSWORD', '<%= database['password'] %>');
-    define('DB_HOST', '<%= database['host'] %>');
-    define('DB_CHARSET', 'utf8');
-    define('DB_COLLATE', '');
-	define('WPLANG', '');
+  define('DB_NAME', '<%= database['database'] %>');
+  define('DB_USER', '<%= database['username'] %>');
+  define('DB_PASSWORD', '<%= database['password'] %>');
+  define('DB_HOST', '<%= database['host'] %>');
+  define('DB_CHARSET', 'utf8');
+  define('DB_COLLATE', '');
+  define('WPLANG', '');
 
 	$table_prefix  = 'wp_';
 
@@ -25,7 +25,8 @@
   // define('WP_CONTENT_DIR', realpath(dirname(__FILE__) . '/content'));
   define('WP_CONTENT_DIR', realpath($_SERVER['DOCUMENT_ROOT'] . '/content'));
 
-	if ( !defined('ABSPATH') )
-	        define('ABSPATH', dirname(__FILE__) . '/');
+	if ( !defined('ABSPATH') ){
+	 define('ABSPATH', dirname(__FILE__) . '/');
+  }
 
 	require_once(ABSPATH . 'wp-settings.php');

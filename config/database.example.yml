@@ -1,9 +1,9 @@
-staging:
+production:
   host: localhost
   database: db_name
   username: db_user
   password: 'db_pass'
-production:
+staging:
   host: localhost
   database: db_name
   username: db_user

@@ -34,12 +34,13 @@ namespace :wp do
 
     desc "Setup WP on remote environment"
     task :remote do
+      invoke 'db:confirm'
       invoke 'deploy'
       invoke 'wp:setup:generate_remote_files'
       on roles(:web) do
-              
+
         within release_path do
-        
+
           if !fetch(:setup_all)
             # Generate a random password
             o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
@@ -62,7 +63,7 @@ namespace :wp do
             \e[32m
             =========================================================================
               WordPress has successfully been installed. Here are your login details:
-              
+
               Username:       #{user}
               Password:       #{password}
               Email address:  #{email}
@@ -76,10 +77,10 @@ namespace :wp do
 
       end
     end
-    
+
     desc "Setup WP on local environment"
     task :local do
-      
+
       run_locally do
 
         if !fetch(:setup_all)
@@ -89,7 +90,7 @@ namespace :wp do
         else
           password = fetch(:wp_pass)
         end
-        
+
         # Get WP details from config in /config
         title = fetch(:wp_sitename)
         email = fetch(:wp_email)
@@ -109,14 +110,14 @@ namespace :wp do
         \e[32m
         =========================================================================
           WordPress has successfully been installed. Here are your login details:
-          
+
           Username:       #{user}
           Password:       #{password}
           Email address:  #{email}
         =========================================================================
         \e[0m
         MSG
-        
+
       end
     end
 
