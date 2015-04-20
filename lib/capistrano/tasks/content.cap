@@ -4,7 +4,11 @@ namespace :uploads do
   task :push do
     run_locally do
         roles(:all).each do |role|
-                execute :rsync, "-avzO content/uploads/ #{role.user}@#{role.hostname}:#{shared_path}/content/uploads"
+            if role.port
+                execute :rsync, "-avz -e \"/usr/bin/ssh -p #{role.port}\" content/uploads/ #{role.user}@#{role.hostname}:#{shared_path}/content/uploads"
+            else 
+                execute :rsync, "-avzO content/uploads/ #{role.user}@#{role.hostname}:#{role.port}#{shared_path}/content/uploads"
+            end
           end
       end
   end
@@ -13,7 +17,11 @@ namespace :uploads do
   task :pull do
     run_locally do
         roles(:all).each do |role|
-                execute :rsync, "-avzO #{role.user}@#{role.hostname}:#{shared_path}/content/uploads/ content/uploads"
+            if role.port
+                execute :rsync, "-avzO -e \"/usr/bin/ssh -p #{role.port}\" #{role.user}@#{role.hostname}:#{shared_path}/content/uploads/ content/uploads"
+            else
+                execute :rsync, "-avzO #{role.user}@#{role.hostname}:#{role.port}#{shared_path}/content/uploads/ content/uploads"
+            end
           end
       end
   end
