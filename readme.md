@@ -94,7 +94,16 @@ This is where you define your SSH access to the remote server, and the full path
 
 `server` can be an IP address or domain; prefixing with `http://` is not needed either way. 
 
-You also need to rename `database.example.yml` to `database.yml` and fill it with the database details for each environment, including your local one. This file should stay ignored in git.
+
+#### Database configuration
+To set up WordPress on your a remote or local server, wp-deploy needs to know the database configuration for that specific environment. You can either specify this as options on the commandline, or use a `database.yml` file.
+To use the command line options, specify the following options when calling a setup task:
+
+```sh
+$ bundle exec cap production wp:setup:remote db_host=<localhost> db_name=<database> db_user=<username> db_password=<password>
+```
+
+To use a `database.yml` file, you need to rename `database.example.yml` to `database.yml` and fill it with the database details for each environment, including your local one. This file should stay ignored in git.
 
 #### .wpignore
 
@@ -109,7 +118,7 @@ wp-deploy makes use of [capistrano-slackify](https://github.com/onthebeach/capis
 
 #### Setting up environments
 
-To set up WordPress on your remote production server, run the following command:
+To set up WordPress on your remote production server, run the following command. Include the database configuration if you do not use a `database.yml file` (See Database configuration).
 
 ```sh
 $ bundle exec cap production wp:setup:remote
@@ -117,7 +126,7 @@ $ bundle exec cap production wp:setup:remote
 
 This will install WordPress using the details in your configuration files, and make your first deployment on your production server. wp-deploy will generate a random password and give it to you at the end of the task, so be sure to write it down and change it to something more momorable when you log in.
 
-You can also automate the set-up of your local environment too, using `wp:setup:local`, or you can save time and set up both your remote and local environments with `wp:setup:both`.
+You can also automate the set-up of your local environment too, using `wp:setup:local`, or you can save time and set up both your remote and local environments with `wp:setup:both`. This only works when using a `database.yml` file.
 
 #### Deploying
 
