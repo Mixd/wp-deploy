@@ -25,4 +25,4 @@ PLATFORMS
 
 DEPENDENCIES
   capistrano (~> 3.4)
-  capistrano-slackify
+  capistrano-slackify (~> 2.2.0)
