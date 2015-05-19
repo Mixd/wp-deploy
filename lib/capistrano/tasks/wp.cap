@@ -142,7 +142,7 @@ namespace :wp do
       system('
       cd wordpress
       git fetch --tags
-      latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      latestTag=$(git tag -l | sort -n -r -t. -k1,1 -k2,2 -k3,3 -k4,4 | sed -n 1p)
       git checkout $latestTag
       ')
       invoke 'cache:repo:purge'
