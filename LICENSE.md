@@ -1,4 +1,8 @@
-# wp-deploy, A framework for deploying WordPress sites using Capistrano 3
+# wp-deploy
+
+A framework for deploying WordPress sites using Capistrano 3
+
+---
 
 Copyright (C) 2015 Mixd
 
