@@ -4,9 +4,8 @@ namespace :db do
   task :backup_name do
   	on roles(:web) do
 
-	    now = Time.now
 	    execute :mkdir, "-p #{shared_path}/db_backups"
-	    backup_time = [now.year,now.month,now.day,now.hour,now.min,now.sec].join()
+	    backup_time = Time.now.strftime '%Y%m%d%H%M%S'
 	    set :backup_filename, backup_time
 	    set :backup_file, "#{shared_path}/db_backups/#{backup_time}.sql"
 
