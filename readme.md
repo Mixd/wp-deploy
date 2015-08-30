@@ -45,7 +45,7 @@ git clone --recursive https://github.com/Mixd/wp-deploy.git new-project
 
 That will clone the repository into a folder name of your choosing and it'll also download any submodules included within the repository. In this case, we have included WordPress.
 
-Next, we need to reinialise it as its own repository rather than having it connected to the current origin. We've create a simple bash script that does most of the leg work for you, so once you've cloned the repo just run:
+Next, we need to reinitialise it as its own repository rather than having it connected to the current origin. We've created a simple bash script that does most of the legwork for you, so once you've cloned the repo just run:
 
 ```sh
 $ bash config/prepare.sh
@@ -75,7 +75,7 @@ set :wp_sitename, "WP Deploy" # The site title
 set :wp_localurl, "http://localhost" # Your local environment URL
 ```
 
-These are the settings used for your inital installation of WordPress. You also need to define your git repository in the same file:
+These are the settings used for your initial installation of WordPress. You also need to define your git repository in the same file:
 
 ```ruby
 set :application, "wp-deploy"
@@ -102,7 +102,7 @@ By default, Capistrano deploys every file within in your repo, including config 
 
 #### Slack Integration
 
-wp-deploy makes use of [capistrano-slackify](https://github.com/onthebeach/capistrano-slackify) to trigger deployment notifactions to Slack. This is optional, but can be pretty handy if you're a Slack user. You just need to add your Slack incoming webhook token and subdomain in the `config/slack.rb` and you're good to go.
+wp-deploy makes use of [capistrano-slackify](https://github.com/onthebeach/capistrano-slackify) to trigger deployment notifications to Slack. This is optional, but can be pretty handy if you're a Slack user. You just need to add your Slack incoming webhook token and subdomain in the `config/slack.rb` and you're good to go.
 
 
 ### Usage
@@ -115,7 +115,7 @@ To set up WordPress on your remote production server, run the following command:
 $ bundle exec cap production wp:setup:remote
 ```
 
-This will install WordPress using the details in your configuration files, and make your first deployment on your production server. wp-deploy will generate a random password and give it to you at the end of the task, so be sure to write it down and change it to something more momorable when you log in.
+This will install WordPress using the details in your configuration files, and make your first deployment on your production server. wp-deploy will generate a random password and give it to you at the end of the task, so be sure to write it down and change it to something more memorable when you log in.
 
 You can also automate the set-up of your local environment too, using `wp:setup:local`, or you can save time and set up both your remote and local environments with `wp:setup:both`.
 
@@ -135,13 +135,13 @@ __WARNING__: Always use caution when migrating databases on live production envi
 
 Migrating databases will also automatically replace development URLs from production databases and vice versa.
 
-To push your local database to the remote evironment:
+To push your local database to the remote environment:
 
 ```sh
 $ bundle exec cap production db:push
 ```
 
-To pull the remote database into your local evironment:
+To pull the remote database into your local environment:
 
 ```sh
 $ bundle exec cap production db:pull
