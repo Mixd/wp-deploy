@@ -1,8 +1,10 @@
-# wp-deploy ![](https://img.shields.io/wordpress/v/akismet.svg)
+# wp-deploy
 
 Capistrano powered WordPress deployment.
 
 ---
+
+![](https://img.shields.io/wordpress/v/akismet.svg)
 
 This repository utilises the Capistrano 3 framework to help the deployment and successful launch of a WordPress based website.
 
