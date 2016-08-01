@@ -1,4 +1,4 @@
-# wp-deploy
+# wp-deploy ![](https://img.shields.io/wordpress/v/akismet.svg)
 
 Capistrano powered WordPress deployment.
 
