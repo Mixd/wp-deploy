@@ -14,7 +14,7 @@ That sounds fancy, but what does it actually do?
 
 - **Install WordPress**: WordPress is created at a git submodule* and installed based on your pre-defined configuration.
 - **Environment based git deployment**: Clone an entire repository (from anywhere) to the server. Have separate environments to deploy to? (think: production/staging) We've got you covered.
-- **Deployment rollbacks**: Realised to deployed a version thats going to break the site? Run a command to revert your changes to the previous version.
+- **Deployment rollbacks**: Realised you deployed a version thats going to break the site? Run a command to revert your changes to the previous version.
 - **Push/Pull database with correct URLs**: Override the environment's database and run a 'search and replace' through the database to make sure the URLs are correct for that environment.
 - **Push/Pull uploads**: Update you entire uploads directory from local to <environment> or vice versa.
 - **Update WordPress**: Update your version of WordPress with ease, straight from the Command Line.
