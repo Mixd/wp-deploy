@@ -11,7 +11,7 @@ set :deploy_to, "/deploy/to/path"
 # Setup Git
 ############################################
 
-set :branch, "master"
+set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "master"
 
 ############################################
 # Extra Settings
