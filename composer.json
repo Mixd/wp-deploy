@@ -1,0 +1,62 @@
+{
+  "name": "davidlonjon/coreWpPlugins",
+  "description": "Provision core plugins for Wordpress",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://wpackagist.org"
+    }
+  ],
+  "require": {
+    "roots/soil": "3.0.0",
+    "composer/installers": "~1.0",
+    "wpackagist/advanced-custom-fields": "4.3.9",
+    "wpackagist/contact-form-7": "3.9.3",
+    "wpackagist/debug-bar": "0.8.1",
+    "wpackagist/debug-bar-console": "0.3",
+    "wpackagist/ewww-image-optimizer": "2.0.2",
+    "wpackagist/use-google-libraries": "1.6.1",
+    "wpackagist/jetpack": "3.1.1",
+    "wpackagist/minqueue": "1.1.2",
+    "wpackagist/w3-total-cache": "0.9.4",
+    "wpackagist/wordpress-importer": "0.6.1",
+    "wpackagist/limit-login-attempts": "1.7.1",
+    "wpackagist/force-strong-passwords": "1.3.4",
+    "wpackagist/google-sitemap-generator": "4.0.7.1",
+    "wpackagist/bj-lazy-load": "0.7.5",
+    "wpackagist/regenerate-thumbnails": "2.2.4",
+    "wpackagist/disable-comments": "1.1.1",
+    "wpackagist/broken-link-checker": "1.9.5",
+    "wpackagist/akismet": "3.0.2",
+    "wpackagist/wp-updates-notifier": "1.4.1",
+    "wpackagist/better-wp-security": "4.4.18"
+
+  },
+  "require-dev": {
+    "wpackagist/debug-bar": "0.8.1",
+    "wpackagist/debug-bar-console": "0.3",
+    "wpackagist/wordpress-reset": "1.3.3",
+    "wpackagist/theme-check": "20140929.1",
+    "wpackagist/kint-debugger": "0.3"
+
+  },
+  "extra": {
+    "installer-paths": {
+      "content/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    }
+  },
+  "authors": [
+    {
+      "name": "David Lonjon",
+      "email": "david.lonjon@gmail.com"
+    }
+  ]
+}
