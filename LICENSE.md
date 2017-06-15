@@ -1,10 +1,10 @@
 # wp-deploy
 
-A framework for deploying WordPress sites using Capistrano 3
+Capistrano powered WordPress deployment.
 
 ---
 
-Copyright (C) 2016 Mixd
+Copyright (C) 2017 Mixd
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
