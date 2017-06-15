@@ -2,7 +2,7 @@
 lock '3.8.1'
 
 ############################################
-# Setup WordPress
+# Setup project
 ############################################
 
 set :wp_user, 'yourname' # The admin username
@@ -10,15 +10,9 @@ set :wp_email, 'yourname@example.com' # The admin email address
 set :wp_sitename, 'WP Deploy' # The site title
 set :wp_localurl, 'http://wpdeploy.dev' # Your local environment URL
 
-############################################
-# Setup project
-############################################
-
 set :application, 'wp-deploy'
 set :repo_url, 'git@github.com:Mixd/wp-deploy.git'
-set :scm, :git
 
-set :git_strategy, SubmoduleStrategy
 
 ############################################
 # Setup Capistrano
@@ -26,10 +20,9 @@ set :git_strategy, SubmoduleStrategy
 
 set :log_level, :debug
 set :use_sudo, false
-
-set :ssh_options,   forward_agent: true
-
 set :keep_releases, 2
+set :ssh_options, forward_agent: true
+
 
 ############################################
 # Linked files and directories (symlinks)
