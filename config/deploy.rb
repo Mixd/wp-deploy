@@ -29,7 +29,7 @@ set :use_sudo, false
 
 set :ssh_options,   forward_agent: true
 
-set :keep_releases, 5
+set :keep_releases, 2
 
 ############################################
 # Linked files and directories (symlinks)
