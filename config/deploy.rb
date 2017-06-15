@@ -24,7 +24,7 @@ set :git_strategy, SubmoduleStrategy
 # Setup Capistrano
 ############################################
 
-set :log_level, :info
+set :log_level, :debug
 set :use_sudo, false
 
 set :ssh_options,   forward_agent: true
