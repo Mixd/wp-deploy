@@ -1,5 +1,10 @@
 namespace :uploads do
-  desc 'Push any changed or new files from local to remote'
+
+  ##############################################################################
+  ## Push any changed or new uploads from local to remote
+  ##############################################################################
+
+  desc 'Push any changed or new uploads from local to remote'
   task :push do
     run_locally do
       roles(:all).each do |role|
@@ -8,7 +13,12 @@ namespace :uploads do
     end
   end
 
-  desc 'Pull any changed or new files from remote to local'
+
+  ##############################################################################
+  ## Pull any changed or new uploads from local to remote
+  ##############################################################################
+
+  desc 'Pull any changed or new uploads from remote to local'
   task :pull do
     run_locally do
       roles(:all).each do |role|
@@ -16,4 +26,5 @@ namespace :uploads do
       end
     end
   end
+
 end

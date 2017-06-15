@@ -1,29 +1,19 @@
-############################################
-# Setup Server
-############################################
+################################################################################
+## Setup Environment
+################################################################################
 
-set :stage, :production
-set :stage_url, 'http://www.example.com'
-server 'XXX.XXX.XX.XXX', user: 'SSHUSER', roles: %w(web app db)
-set :deploy_to, '/deploy/to/path'
-
-############################################
-# Setup Git
-############################################
-
+# The Git branch this environment should be attached to.
 set :branch, 'master'
 
-############################################
-# Extra Settings
-############################################
+# The environment's name. To be used in commands and other references.
+set :stage, :production
 
-# specify extra ssh options:
+# The URL of the website in this environment.
+set :stage_url, 'http://www.example.com'
 
-# set :ssh_options, {
-#    auth_methods: %w(password),
-#    password: 'password',
-#    user: 'username',
-# }
+# The environment's server credentials
+server 'XXX.XXX.XX.XXX', user: 'SSHUSER', roles: %w(web app db)
 
-# specify a specific temp dir if user is jailed to home
-# set :tmp_dir, "/path/to/custom/tmp"
+# The deploy path to the website on this environment's server.
+set :deploy_to, '/deploy/to/path'
+

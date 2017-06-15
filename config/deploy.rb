@@ -1,32 +1,40 @@
-# config valid only for Capistrano 3.4
+################################################################################
+## Setup project
+################################################################################
+
+# Lock the project to Capistrano 3.8.1
 lock '3.8.1'
 
-############################################
-# Setup project
-############################################
+# The WordPress admin user
+set :wp_user, 'yourname'
 
-set :wp_user, 'yourname' # The admin username
-set :wp_email, 'yourname@example.com' # The admin email address
-set :wp_sitename, 'WP Deploy' # The site title
-set :wp_localurl, 'http://wpdeploy.dev' # Your local environment URL
+# The WordPress admin email address
+set :wp_email, 'yourname@example.com'
 
+# The WordPress 'Site Title' for the website
+set :wp_sitename, 'WP Deploy'
+
+# The local environment URL.
+set :wp_localurl, 'http://wpdeploy.dev'
+
+# An identifying name for the application to be used by Capistrano
 set :application, 'wp-deploy'
 set :repo_url, 'git@github.com:Mixd/wp-deploy.git'
 
 
-############################################
-# Setup Capistrano
-############################################
+################################################################################
+## Setup Capistrano
+################################################################################
 
 set :log_level, :debug
-set :use_sudo, false
 set :keep_releases, 2
+set :use_sudo, false
 set :ssh_options, forward_agent: true
 
 
-############################################
-# Linked files and directories (symlinks)
-############################################
+################################################################################
+## Linked files and directories (symlinks)
+################################################################################
 
 set :linked_files, %w(wp-config.php .htaccess)
 set :linked_dirs, %w(content/uploads)

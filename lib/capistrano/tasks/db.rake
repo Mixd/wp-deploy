@@ -1,19 +1,40 @@
 namespace :db do
-  desc 'Creates a sensible backup name for SQL files'
+
+  ##############################################################################
+  ## Create a sensible backup name for SQL files
+  ##############################################################################
+
+  desc 'Create a sensible backup name for SQL files'
   task :backup_name do
     on roles(:web) do
+
+      # Make a new directory in your shared folder
       execute :mkdir, "-p #{shared_path}/db_backups"
+
+      # Get the current timestamp
       backup_time = Time.now.strftime '%Y%m%d%H%M%S'
+
+      # Set the filename as the current timestamp
       set :backup_filename, backup_time
+
+      # Get the file's absolute path
       set :backup_file, "#{shared_path}/db_backups/#{backup_time}.sql"
     end
   end
 
+
+  ##############################################################################
+  ## Confirm a database action before proceeding
+  ##############################################################################
+
   desc 'Confirms the database action before proceeeding'
   task :confirm do
     on roles(:web) do
+
+      # Load the database details
       database = YAML.load_file('config/database.yml')[fetch(:stage).to_s]
 
+      # Set the confirmation message
       set :confirmed, proc {
         puts <<-WARN
   \033[31m
@@ -27,9 +48,15 @@ namespace :db do
   ========================================================================
   \033[0m
         WARN
+
+        # Prompt the user to write out the database name
         ask :answer, database['database']
+
+        # If user correctly inputs the database name then continue with the action
         if fetch(:answer) == database['database']
           true
+
+        # If not, give them another chance, assuming they haven't already had 3
         else
           loopCount = 1
           loop do
@@ -44,6 +71,7 @@ namespace :db do
         true if fetch(:answer) == database['database']
       }.call
 
+      # Error message to show to user
       unless fetch(:confirmed)
         puts <<-WARN
   \033[31m
@@ -57,7 +85,12 @@ namespace :db do
     end
   end
 
-  desc 'Takes a database dump from remote server'
+
+  ##############################################################################
+  ## Take a database dump from remote server
+  ##############################################################################
+
+  desc 'Take a database dump from remote server'
   task :backup do
     invoke 'db:backup_name'
     on roles(:db) do
@@ -74,7 +107,12 @@ namespace :db do
     end
   end
 
-  desc 'Imports the remote database into your local environment'
+
+  ##############################################################################
+  ## Imports the remote database to your local environment
+  ##############################################################################
+
+  desc 'Import the remote database to your local environment'
   task :pull do
     invoke 'db:backup'
 
@@ -88,7 +126,12 @@ namespace :db do
     end
   end
 
-  desc 'Imports the local database into your remote environment'
+
+  ##############################################################################
+  ## Import the local database to your remote environment
+  ##############################################################################
+
+  desc 'Import the local database to your remote environment'
   task :push do
     invoke 'db:confirm'
 
@@ -113,4 +156,5 @@ namespace :db do
       end
     end
   end
+
 end

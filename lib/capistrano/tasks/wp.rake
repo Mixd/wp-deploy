@@ -1,4 +1,10 @@
 namespace :wp do
+
+  ##############################################################################
+  ## Set the necessary file permissions
+  ##############################################################################
+
+  desc 'Set the necessary file permissions'
   task :set_permissions do
     on roles(:app) do
       execute :chmod, "666 #{shared_path}/.htaccess"
@@ -7,7 +13,12 @@ namespace :wp do
   end
 
   namespace :setup do
-    desc 'Generates wp-config.php on remote server'
+
+    ############################################################################
+    ## Generate template files
+    ############################################################################
+
+    desc 'Generate template files'
     task :generate_remote_files do
       on roles(:web) do
         # Get details for WordPress config file
@@ -29,7 +40,12 @@ namespace :wp do
       invoke 'wp:set_permissions'
     end
 
-    desc 'Setup WP on remote environment'
+
+    ############################################################################
+    ## Setup WordPress on the remote environment
+    ############################################################################
+
+    desc 'Setup WordPress on the remote environment'
     task :remote do
       invoke 'db:confirm'
       invoke 'deploy'
@@ -71,7 +87,12 @@ namespace :wp do
       end
     end
 
-    desc 'Setup WP on local environment'
+
+    ############################################################################
+    ## Setup WordPress on the local environment
+    ############################################################################
+
+    desc 'Setup WordPress on the local environment'
     task :local do
       run_locally do
         if !fetch(:setup_all)
@@ -111,7 +132,12 @@ namespace :wp do
       end
     end
 
-    desc 'Setup WP on remote and local environments'
+
+    ############################################################################
+    ## Setup WordPress on both the local and remote environments
+    ############################################################################
+
+    desc 'Setup WordPress on both the local and remote environments'
     task :both do
       set :setup_all, true
 
@@ -127,7 +153,12 @@ namespace :wp do
   end
 
   namespace :core do
-    desc 'Updates the WP core submodule to the latest tag'
+
+    ############################################################################
+    ## Update WordPress submodule to latest version
+    ############################################################################
+
+    desc 'Update WordPress submodule to latest version'
     task :update do
       system('
       cd wordpress
