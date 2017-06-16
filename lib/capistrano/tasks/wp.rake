@@ -26,13 +26,17 @@ namespace :wp do
         wp_siteurl = fetch(:stage_url)
         database = YAML.load_file('config/database.yml')[fetch(:stage).to_s]
 
+        # Create template file paths based on the environment
+        wpconfigFilePath = "config/templates/#{fetch(:stage)}/wp-config.php.erb"
+        htaccessFilePath = "config/templates/#{fetch(:stage)}/.htaccess.erb"
+
         # Create config file in remote environment
-        db_config = ERB.new(File.read('config/templates/wp-config.php.erb')).result(binding)
+        db_config = ERB.new(File.read(wpconfigFilePath)).result(binding)
         io = StringIO.new(db_config)
         upload! io, File.join(shared_path, 'wp-config.php')
 
         # Create .htaccess in remote environment
-        accessfile = ERB.new(File.read('config/templates/.htaccess.erb')).result(binding)
+        accessfile = ERB.new(File.read(htaccessFilePath)).result(binding)
         io = StringIO.new(accessfile)
         upload! io, File.join(shared_path, '.htaccess')
       end
@@ -112,8 +116,11 @@ namespace :wp do
         # Create wp-config.php
         database = YAML.load_file('config/database.yml')['local']
         secret_keys = capture('curl -s -k https://api.wordpress.org/secret-key/1.1/salt')
-        db_config = ERB.new(File.read('config/templates/wp-config.php.erb')).result(binding)
+        db_config = ERB.new(File.read('config/templates/local/wp-config.php.erb')).result(binding)
         File.open('wp-config.php', 'w') { |f| f.write(db_config) }
+
+        # Create .htaccess in local environment
+        accessfile = ERB.new(File.read('config/templates/local/.htaccess.erb')).result(binding)
 
         # Install WordPress
         execute :wp, "core install --url='#{wp_siteurl}' --title='#{title}' --admin_user='#{user}' --admin_password='#{password}' --admin_email='#{email}'"
