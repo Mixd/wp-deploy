@@ -18,7 +18,7 @@ That sounds fancy, but what does it actually do?
 - **Push/Pull database with correct URLs**: Override the environment's database and run a 'search and replace' through the database to make sure the URLs are correct for that environment.
 - **Push/Pull uploads**: Update you entire uploads directory from local to <environment> or vice versa.
 - **Update WordPress**: Update your version of WordPress with ease, straight from the Command Line.
-- **Configuration templates**: Need specific attributes within your `.htaccess` or `wp-config.php`? The templates are designed for this in mind.
+- **Configuration templates**: Need specific attributes within your `.htaccess` or `wp-config.php`? The templates are designed for this in mind and allow you to do this on an environment by environment basis.
 - **Setup permissions**: Make sure your uploads and `.htaccess` files are readable from the get-go.
 - **Slack integration**: Let your teammates know when you're deploying to a server, in addition to when a deployment is successful or not.
 
