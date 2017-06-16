@@ -121,6 +121,7 @@ namespace :wp do
 
         # Create .htaccess in local environment
         accessfile = ERB.new(File.read('config/templates/local/.htaccess.erb')).result(binding)
+        File.open('.htaccess', 'w') { |f| f.write(accessfile) }
 
         # Install WordPress
         execute :wp, "core install --url='#{wp_siteurl}' --title='#{title}' --admin_user='#{user}' --admin_password='#{password}' --admin_email='#{email}'"
