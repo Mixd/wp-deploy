@@ -29,6 +29,7 @@ namespace :wp do
         # Create template file paths based on the environment
         wpconfigFilePath = "config/templates/#{fetch(:stage)}/wp-config.php.erb"
         htaccessFilePath = "config/templates/#{fetch(:stage)}/.htaccess.erb"
+        robotsFilePath = "config/templates/#{fetch(:stage)}/robots.txt.erb"
 
         # Create config file in remote environment
         db_config = ERB.new(File.read(wpconfigFilePath)).result(binding)
@@ -39,6 +40,11 @@ namespace :wp do
         accessfile = ERB.new(File.read(htaccessFilePath)).result(binding)
         io = StringIO.new(accessfile)
         upload! io, File.join(shared_path, '.htaccess')
+
+        # Create robots.txt in remote environment
+        robotsfile = ERB.new(File.read(robotsFilePath)).result(binding)
+        io = StringIO.new(robotsfile)
+        upload! io, File.join(shared_path, 'robots.txt')
       end
       # Set some permissions
       invoke 'wp:set_permissions'
@@ -122,6 +128,10 @@ namespace :wp do
         # Create .htaccess in local environment
         accessfile = ERB.new(File.read('config/templates/local/.htaccess.erb')).result(binding)
         File.open('.htaccess', 'w') { |f| f.write(accessfile) }
+
+        # Create robots.txt in local environment
+        robotsfile = ERB.new(File.read('config/templates/local/robots.txt.erb')).result(binding)
+        File.open('robots.txt', 'w') { |f| f.write(robotsfile) }
 
         # Install WordPress
         execute :wp, "core install --url='#{wp_siteurl}' --title='#{title}' --admin_user='#{user}' --admin_password='#{password}' --admin_email='#{email}'"

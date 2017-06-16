@@ -36,7 +36,7 @@ set :ssh_options, forward_agent: true
 ## Linked files and directories (symlinks)
 ################################################################################
 
-set :linked_files, %w(wp-config.php .htaccess)
+set :linked_files, %w(wp-config.php .htaccess robots.txt)
 set :linked_dirs, %w(content/uploads)
 
 namespace :deploy do
@@ -49,20 +49,6 @@ namespace :deploy do
   end
 
   after 'check:make_linked_dirs', :create_wp_files
-
-  desc 'Creates robots.txt for non-production envs'
-  task :create_robots do
-    on roles(:app) do
-      if fetch(:stage) != :production
-
-        io = StringIO.new('User-agent: *
-Disallow: /')
-        upload! io, File.join(release_path, 'robots.txt')
-        execute :chmod, "644 #{release_path}/robots.txt"
-      end
-    end
-  end
-
   after :finished, :create_robots
   after :finishing, 'deploy:cleanup'
 end
