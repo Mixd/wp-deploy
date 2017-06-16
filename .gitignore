@@ -31,3 +31,7 @@ wp-config.php
 _assets
 node_modules
 ai-cache/*
+
+.bundle/
+.direnv/
+.envrc
