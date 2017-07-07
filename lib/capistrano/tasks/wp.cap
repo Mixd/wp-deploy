@@ -4,8 +4,8 @@ namespace :wp do
     on roles(:app) do
       execute :chmod, "0644 #{shared_path}/.htaccess"
       execute :chmod, "0640 #{shared_path}/wp-config.php"
-      execute :find, "#{shared_path}/content/uploads -type f -exec chmod 0755 {} \;
-      execute :find, "#{shared_path}/content/uploads -type d -exec chmod 0660 {} \;
+      execute :find, "#{shared_path}/content/uploads -type f -exec chmod 0755 {} \;"
+      execute :find, "#{shared_path}/content/uploads -type d -exec chmod 0660 {} \;"
     end
   end
 
