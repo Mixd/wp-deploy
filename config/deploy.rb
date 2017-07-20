@@ -45,6 +45,7 @@ namespace :deploy do
     on roles(:app) do
       execute :touch, "#{shared_path}/wp-config.php"
       execute :touch, "#{shared_path}/.htaccess"
+      execute :touch, "#{shared_path}/robots.txt"
     end
   end
 
