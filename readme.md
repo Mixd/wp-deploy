@@ -20,7 +20,6 @@ That sounds fancy, but what does it actually do?
 - **Update WordPress**: Update your version of WordPress with ease, straight from the Command Line.
 - **Configuration templates**: Need specific attributes within your `.htaccess` or `wp-config.php`? The templates are designed for this in mind and allow you to do this on an environment by environment basis.
 - **Setup permissions**: Make sure your uploads and `.htaccess` files are readable from the get-go.
-- **Slack integration**: Let your teammates know when you're deploying to a server, in addition to when a deployment is successful or not.
 
 ## Requirements
 
@@ -38,7 +37,7 @@ Some of the following tech is more untested than anything else. This could due t
 - Nginx
 - Git (lower than version 1.7.3)
 - WP-CLI (lower than version 0.22.0)
-- Capistrano 2 or lower.
+- Capistrano 3.8 or lower.
 - Another shell besides Bash/Zsh for local development
 - WordPress Multisite
 
