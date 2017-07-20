@@ -50,6 +50,5 @@ namespace :deploy do
   end
 
   after 'check:make_linked_dirs', :create_wp_files
-  after :finished, :create_robots
   after :finishing, 'deploy:cleanup'
 end
