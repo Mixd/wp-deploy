@@ -15,7 +15,7 @@ namespace :uploads do
 
 
   ##############################################################################
-  ## Pull any changed or new uploads from local to remote
+  ## Pull any changed or new uploads from remote to local
   ##############################################################################
 
   desc 'Pull any changed or new uploads from remote to local'
