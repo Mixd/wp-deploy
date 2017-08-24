@@ -18,7 +18,7 @@ namespace :db do
       set :backup_filename, backup_time
 
       # Get the file's absolute path
-      set :backup_file, "#{shared_path}/db_backups/#{backup_time}.sql"
+      set :backup_file, "#{shared_path}/db_backups/#{backup_time}.sql.gz"
     end
   end
 
@@ -95,11 +95,11 @@ namespace :db do
     invoke 'db:backup_name'
     on roles(:db) do
       within release_path do
-        execute :wp, "db export #{fetch(:backup_file)} --add-drop-table"
+        execute :wp, "db export - | gzip > #{fetch(:backup_file)}"
       end
 
       system('mkdir -p db_backups')
-      download! "#{fetch(:backup_file)}", "db_backups/#{fetch(:backup_filename)}.sql"
+      download! "#{fetch(:backup_file)}", "db_backups/#{fetch(:backup_filename)}.sql.gz"
 
       within release_path do
         execute :rm, "#{fetch(:backup_file)}"
@@ -118,9 +118,9 @@ namespace :db do
 
     on roles(:db) do
       run_locally do
-        execute :wp, "db import db_backups/#{fetch(:backup_filename)}.sql"
+        execute :gzip, "-c -d db_backups/#{fetch(:backup_filename)}.sql.gz | wp db import -"
         execute :wp, "search-replace #{fetch(:stage_url)} #{fetch(:wp_localurl)}"
-        execute :rm, "db_backups/#{fetch(:backup_filename)}.sql"
+        execute :rm, "db_backups/#{fetch(:backup_filename)}.sql.gz"
         execute :rmdir, 'db_backups' if Dir['db_backups/*'].empty?
       end
     end
@@ -139,19 +139,19 @@ namespace :db do
     on roles(:db) do
       run_locally do
         execute :mkdir, '-p db_backups'
-        execute :wp, "db export db_backups/#{fetch(:backup_filename)}.sql --add-drop-table"
+        execute :wp, "db export - | gzip > db_backups/#{fetch(:backup_filename)}.sql.gz"
       end
 
-      upload! "db_backups/#{fetch(:backup_filename)}.sql", "#{fetch(:backup_file)}"
+      upload! "db_backups/#{fetch(:backup_filename)}.sql.gz", "#{fetch(:backup_file)}"
 
       within release_path do
-        execute :wp, "db import #{fetch(:backup_file)}"
+        execute :gzip, "-c -d #{fetch(:backup_file)} | wp db import -"
         execute :wp, "search-replace #{fetch(:wp_localurl)} #{fetch(:stage_url)}"
         execute :rm, "#{fetch(:backup_file)}"
       end
 
       run_locally do
-        execute :rm, "db_backups/#{fetch(:backup_filename)}.sql"
+        execute :rm, "db_backups/#{fetch(:backup_filename)}.sql.gz"
         execute :rmdir, 'db_backups' if Dir['db_backups/*'].empty?
       end
     end
