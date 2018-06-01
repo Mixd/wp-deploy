@@ -1,10 +1,11 @@
+## Please note that this project is no longer actively maintained.
+As an organisation we do not currently have the capacity to actively maintain this project. We are still monitoring issues and pull requests should you identify any urgent or security oriented issues.
+
 # wp-deploy
 
 Capistrano powered WordPress deployment.
 
 ---
-
-![](https://img.shields.io/wordpress/v/akismet.svg)
 
 This repository utilises the Capistrano 3 framework to help the deployment and successful launch of a WordPress based website.
 
