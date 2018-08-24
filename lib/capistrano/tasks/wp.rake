@@ -7,8 +7,9 @@ namespace :wp do
   desc 'Set the necessary file permissions'
   task :set_permissions do
     on roles(:app) do
-      execute :chmod, "0664 #{shared_path}/.htaccess"
-      execute :chmod, "-R 2775 #{shared_path}/content/uploads"
+      execute :chmod, "664 #{shared_path}/.htaccess"
+      execute :chmod, "-R 775 #{shared_path}/content/uploads"
+      execute :chown, ":www-data #{shared_path}/content/uploads"
     end
   end
 
