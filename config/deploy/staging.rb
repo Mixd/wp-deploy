@@ -16,3 +16,6 @@ server 'XXX.XXX.XX.XXX', user: 'SSHUSER', roles: %w(web app db)
 
 # The deploy path to the website on this environment's server.
 set :deploy_to, '/deploy/to/path'
+
+# The web user on this environment's server.
+set :web_user, 'www-data'
