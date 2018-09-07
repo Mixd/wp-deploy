@@ -5,6 +5,11 @@ As an organisation we do not currently have the capacity to actively maintain th
 
 Capistrano powered WordPress deployment.
 
+>### Rackspace High Availability MySQL support
+>
+>This branch has modifications to allow support for Rackspace Cloud Servers set up in a High Availability Cluster.
+
+
 ---
 
 This repository utilises the Capistrano 3 framework to help the deployment and successful launch of a WordPress based website.
