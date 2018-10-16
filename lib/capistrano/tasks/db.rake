@@ -50,7 +50,7 @@ namespace :db do
         WARN
 
         # Prompt the user to write out the database name
-        ask :answer, database['database']
+        ask :answer
 
         # If user correctly inputs the database name then continue with the action
         if fetch(:answer) == database['database']
@@ -62,7 +62,7 @@ namespace :db do
           loop do
             loopCount += 1
             puts "\033[31mYou typed the database name incorrectly. Please enter \033[0m\033[1m\033[34m#{database['database']}\033[0m\033[22m\033[0m\033[0m"
-            ask :answer, database['database']
+            ask :answer
             break if loopCount == 3
             break if fetch(:answer) == database['database']
           end
