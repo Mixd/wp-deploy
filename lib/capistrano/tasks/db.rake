@@ -18,7 +18,7 @@ namespace :db do
       set :backup_filename, backup_time
 
       # Get the file's absolute path
-      set :backup_file, "#{shared_path}/db_backups/#{backup_time}.sql.gz"
+      set :backup_file, "#{shared_path}/db_backups/#{backup_time}.sql"
     end
   end
 
@@ -95,11 +95,14 @@ namespace :db do
     invoke 'db:backup_name'
     on roles(:db) do
       within release_path do
-        execute :wp, "db export - | gzip > #{fetch(:backup_file)}"
+        # Load the database details
+        database = YAML.load_file('config/database.yml')[fetch(:stage).to_s]
+        execute :mysqldump, "--set-gtid-purged=OFF -h #{database['host']} -u #{database['username']} #{database['database']} -p#{database['password']} > #{fetch(:backup_file)}"
+        # execute :wp, "db export #{fetch(:backup_file)} --add-drop-table"
       end
 
       system('mkdir -p db_backups')
-      download! "#{fetch(:backup_file)}", "db_backups/#{fetch(:backup_filename)}.sql.gz"
+      download! "#{fetch(:backup_file)}", "db_backups/#{fetch(:backup_filename)}.sql"
 
       within release_path do
         execute :rm, "#{fetch(:backup_file)}"
@@ -118,9 +121,11 @@ namespace :db do
 
     on roles(:db) do
       run_locally do
-        execute :gzip, "-c -d db_backups/#{fetch(:backup_filename)}.sql.gz | wp db import -"
+        # Load the database details
+        database = YAML.load_file('config/database.yml')
+        execute :mysql, "-f -h #{database['local']['host']} -u #{database['local']['username']} #{database['local']['database']} -p#{database['local']['password']} < db_backups/#{fetch(:backup_filename)}.sql"
         execute :wp, "search-replace #{fetch(:stage_url)} #{fetch(:wp_localurl)}"
-        execute :rm, "db_backups/#{fetch(:backup_filename)}.sql.gz"
+        execute :rm, "db_backups/#{fetch(:backup_filename)}.sql"
         execute :rmdir, 'db_backups' if Dir['db_backups/*'].empty?
       end
     end
@@ -139,19 +144,19 @@ namespace :db do
     on roles(:db) do
       run_locally do
         execute :mkdir, '-p db_backups'
-        execute :wp, "db export - | gzip > db_backups/#{fetch(:backup_filename)}.sql.gz"
+        execute :wp, "db export db_backups/#{fetch(:backup_filename)}.sql --add-drop-table"
       end
 
-      upload! "db_backups/#{fetch(:backup_filename)}.sql.gz", "#{fetch(:backup_file)}"
+      upload! "db_backups/#{fetch(:backup_filename)}.sql", "#{fetch(:backup_file)}"
 
       within release_path do
-        execute :gzip, "-c -d #{fetch(:backup_file)} | wp db import -"
+        execute :wp, "db import #{fetch(:backup_file)}"
         execute :wp, "search-replace #{fetch(:wp_localurl)} #{fetch(:stage_url)}"
         execute :rm, "#{fetch(:backup_file)}"
       end
 
       run_locally do
-        execute :rm, "db_backups/#{fetch(:backup_filename)}.sql.gz"
+        execute :rm, "db_backups/#{fetch(:backup_filename)}.sql"
         execute :rmdir, 'db_backups' if Dir['db_backups/*'].empty?
       end
     end
