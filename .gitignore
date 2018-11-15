@@ -1,33 +1,27 @@
-# Logs and databases #
-######################
 *.log
-*.sql
-*.sqlite
-database.yml
-
-# OS generated files #
-######################
-.DS_Store*
-ehthumbs.db
-Thumbs.db
-
-# Wordpress files #
-###################
-.htaccess
-xmlrpc.php
-sitemap.xml
-sitemap.xml.gz
-readme.html
-license.txt
-content/uploads/*
-content/upgrade/*
-content/cache/*
-content/backup/*
 wp-config.php
+content/advanced-cache.php
+content/backup-db/
+content/backups/
+content/blogs.dir/
+content/cache/
+content/upgrade/
+content/uploads/
+content/mu-plugins/
+content/wp-cache-config.php
+content/plugins/hello.php
+xmlrpc.php
 
-# Misc #
-###################
+/.htaccess
+/license.txt
+/readme.html
+/sitemap.xml
+/sitemap.xml.gz
 
-_assets
+*.sql
+/config/database.yml
+/config/deploy.rb
+/config/deploy/staging.rb
+/config/deploy/production.rb
+
 node_modules
-ai-cache/*
