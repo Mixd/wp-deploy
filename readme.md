@@ -33,7 +33,7 @@ In addition, as this is powered by WordPress, you'll also need to follow [WordPr
 
 ## Unsupported/Untested tech
 
-Some of the following tech is more untested than anything else. This could due to time constraints or unfamiliarity with the software:
+Some of the following tech is more untested than anything else. This could be due to time constraints or unfamiliarity with the software:
 
 - Nginx
 - Git (lower than version 1.7.3)
@@ -62,4 +62,4 @@ Take a look at the [Contributing guide](https://github.com/Mixd/wp-deploy/wiki/C
 
 ## Credits
 
-This project is under constant development by the [Mixd](http://www.mixd.co.uk) team. Like it? Hate it? Let us know on [Twitter](http://twitter.com/mixd).
+This project is developed by the [Mixd](http://www.mixd.co.uk) team. Like it? Hate it? Let us know on [Twitter](http://twitter.com/mixd).
