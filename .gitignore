@@ -19,6 +19,7 @@ xmlrpc.php
 /sitemap.xml.gz
 
 *.sql
+*.sql.gz
 /config/database.yml
 /config/deploy.rb
 /config/deploy/staging.rb
