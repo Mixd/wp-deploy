@@ -26,3 +26,4 @@ xmlrpc.php
 /config/deploy/production.rb
 
 node_modules
+.DS_Store
