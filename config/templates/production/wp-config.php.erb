@@ -12,7 +12,7 @@ $table_prefix  = 'wp_';
 
 <%= secret_keys %>
 
-define('WP_HOME','<%= wp_siteurl %>');
+define('WP_HOME', '<%= wp_siteurl %>');
 define('WP_SITEURL','<%= wp_siteurl %>/wordpress');
 
 define('WP_CONTENT_URL', '<%= wp_siteurl %>/content');
@@ -26,8 +26,8 @@ define('WP_CONTENT_URL', '<%= wp_siteurl %>/content');
 // define('WP_CONTENT_DIR', realpath(dirname(__FILE__) . '/content'));
 define('WP_CONTENT_DIR', realpath($_SERVER['DOCUMENT_ROOT'] . '/content'));
 
-if ( !defined('ABSPATH') ){
- define('ABSPATH', dirname(__FILE__) . '/');
+if (!defined('ABSPATH')){
+    define('ABSPATH', dirname(__FILE__) . '/');
 }
 
 require_once(ABSPATH . 'wp-settings.php');
