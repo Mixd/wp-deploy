@@ -10,7 +10,6 @@ content/uploads/
 content/mu-plugins/
 content/wp-cache-config.php
 content/plugins/hello.php
-/wordpress/xmlrpc.php
 
 /.htaccess
 /license.txt
