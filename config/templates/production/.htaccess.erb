@@ -1,3 +1,11 @@
+# Block WordPress xmlrpc.php requests
+<Files xmlrpc.php>
+Order Allow,Deny
+Deny from all
+#allow from xxx.xxx.xxx.xxx
+</Files>
+
+
 # BEGIN WordPress
 
 <IfModule mod_rewrite.c>
