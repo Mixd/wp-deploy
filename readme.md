@@ -1,3 +1,7 @@
+# Project Archive
+
+This project is no longer hosted or maintained by Mixd. It has been set as a github read-only archive. If you are required to make changes to this repository please seek approval first from either the Digital Director or Service Desk Manager.
+
 # wp-deploy
 
 Capistrano powered WordPress deployment.
